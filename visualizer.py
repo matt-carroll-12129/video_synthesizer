@@ -105,6 +105,29 @@ def draw_pygame():
 
         pygame.display.flip()
         clock.tick(90)
+
+def get_onsets():
+    while True:
+        try:
+            buffer_size = 2048 # for undistorted audio
+            audiobuffer = stream.read(buffer_size, exception_on_overflow=False)
+            signal = np.fromstring(audiobuffer, dtype=np.float32)
+
+            if onset(signal):
+                q.put(True)
+
+        except KeyboardInterrupt:
+            print(" Ctrl+C pressed, exiting")
+            break 
+
+t = Thread(target=get_onsets, args=())
+t.daemon = True
+t.start()
+
+draw_pygame()
+strea.stop_stream()
+stream.close()
+pygame.display.quit()
                 
 
 
