@@ -125,7 +125,7 @@ t.daemon = True
 t.start()
 
 draw_pygame()
-strea.stop_stream()
+stream.stop_stream()
 stream.close()
 pygame.display.quit()
                 
